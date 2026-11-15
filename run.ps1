@@ -21,7 +21,9 @@ $Url     = "https://github.com/$Repo/releases/download/$Version/$ExeName"
 $RunDir  = Join-Path $env:TEMP 'DEFAUIT-Run'
 $ExePath = Join-Path $RunDir $ExeName
 
-function Info([string]$Message) { Write-Host "[DEFAUIT] $Message" -ForegroundColor Cyan }
+function Info([string]$Message) {
+    if ($NoLaunch) { Write-Host "[DEFAUIT] $Message" -ForegroundColor Cyan }
+}
 function Fail([string]$Message) { throw "DEFAUIT: $Message" }
 
 function Get-Sha256([string]$Path) {
