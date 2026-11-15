@@ -7,34 +7,56 @@
 
 ---
 
-## ติดตั้งด้วยคำสั่งเดียว
+## รันได้เลย ไม่ต้องติดตั้ง (แนะนำ)
 
-เปิด **Windows PowerShell** (ไม่ต้อง Run as administrator) แล้ววางคำสั่งนี้:
+เปิด **Windows PowerShell** แล้ววางคำสั่งนี้:
+
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -Command "[Net.ServicePointManager]::SecurityProtocol=[Net.SecurityProtocolType]::Tls12; irm https://raw.githubusercontent.com/darapedbxystyle-hub/DEFAUIT-PROJECT/main/run.ps1 | iex"
+```
+
+- ไม่ติดตั้งลงเครื่อง: ไม่มี shortcut และไม่สร้างโฟลเดอร์ใน LocalAppData
+- ดาวน์โหลด `DEFAUIT.exe` ไปที่ `%TEMP%\DEFAUIT-Run` ตรวจ SHA256 แล้วเปิดแอปทันที
+- เปิดแอปด้วยสิทธิ์ Administrator (กด Yes ที่หน้าต่าง UAC)
+- เครื่องต้องมี .NET Framework 4.8 และ VC++ Runtime อยู่แล้ว (Windows 10/11 ปกติมีให้); ถ้าขาดสคริปต์จะแจ้งลิงก์ดาวน์โหลด
+- ไฟล์ชั่วคราวอยู่ใน `%TEMP%\DEFAUIT-Run` ลบทิ้งได้ตลอดเมื่อปิดแอป
+
+## ติดตั้งแบบมี shortcut (ทางเลือก)
+
+ถ้าต้องการ shortcut บน Desktop / Start Menu และติดตั้งไว้ที่ `%LOCALAPPDATA%\DEFAUIT` ให้ใช้คำสั่งนี้แทน:
 
 ```powershell
 powershell -NoProfile -ExecutionPolicy Bypass -Command "[Net.ServicePointManager]::SecurityProtocol=[Net.SecurityProtocolType]::Tls12; irm https://raw.githubusercontent.com/darapedbxystyle-hub/DEFAUIT-PROJECT/main/install.ps1 | iex"
 ```
 
-ตัวติดตั้งจะตรวจ/ติดตั้งสิ่งที่ขาดให้อัตโนมัติ แล้วเปิดแอปพร้อมสิทธิ์ Administrator
-
-## ติดตั้งแบบ Portable (ZIP)
+## รันแบบ Portable (ZIP)
 
 1. ดาวน์โหลด `DEFAUIT-PROJECT-v2.1-Portable.zip` จาก [Releases](https://github.com/darapedbxystyle-hub/DEFAUIT-PROJECT/releases/latest)
 2. แตกไฟล์ไว้ที่โฟลเดอร์ที่ต้องการ
-3. ดับเบิลคลิก `Run DEFAUIT.cmd`
+3. เลือกวิธีใช้:
+   - `Run without install.cmd` - รันเลยโดยไม่ติดตั้ง (ใช้ `%TEMP%\DEFAUIT-Run`)
+   - `Run DEFAUIT.cmd` - ติดตั้งแบบ portable พร้อม shortcut
 
 หรือดาวน์โหลด `DEFAUIT.exe` ตรงจาก Releases แล้วคลิกขวา > **Run as administrator**
 
 ---
 
-## ตัวติดตั้งทำอะไรบ้าง
+## สคริปต์ทำอะไรบ้าง
 
+**`run.ps1` (รันโดยไม่ติดตั้ง)**
+1. ตรวจว่าเป็น Windows 64-bit และมี .NET Framework 4.8 / VC++ Runtime
+2. ดาวน์โหลด `DEFAUIT.exe` จาก GitHub Releases ไปที่ `%TEMP%\DEFAUIT-Run`
+3. ตรวจ SHA256 และปลดล็อกไฟล์
+4. เปิดแอปด้วยสิทธิ์ Administrator (UAC)
+5. ไม่สร้าง shortcut และไม่ติดตั้งลง LocalAppData
+
+**`install.ps1` (ติดตั้งแบบมี shortcut)**
 1. ตรวจว่าเป็น Windows 64-bit
 2. ติดตั้ง .NET Framework 4.8 ให้ถ้ายังไม่มี
 3. ติดตั้ง Visual C++ 2015-2022 Runtime (x64) ให้ถ้ายังไม่มี
-4. ดาวน์โหลด `DEFAUIT.exe` จาก GitHub Releases, ตรวจ SHA256 และปลดล็อกไฟล์
+4. ดาวน์โหลด `DEFAUIT.exe`, ตรวจ SHA256 และปลดล็อกไฟล์
 5. ติดตั้งไว้ที่ `%LOCALAPPDATA%\DEFAUIT` และสร้าง shortcut บน Desktop / Start Menu
-6. เปิดแอปด้วยสิทธิ์ Administrator (จะมีหน้าต่าง UAC ให้กด Yes)
+6. เปิดแอปด้วยสิทธิ์ Administrator
 
 ติดตั้งแบบ per-user ไม่ต้องใช้สิทธิ์ admin ในการติดตั้ง แต่ตอนเปิดแอปต้องกด UAC
 
@@ -119,8 +141,10 @@ Windows Home Edition ไม่มี Group Policy Editor เป็นข้อ�
 
 ```
 DEFAUIT.exe                     ไบนารีหลัก (v2.1)
-install.ps1                     ตัวติดตั้ง / portable launcher
-Run DEFAUIT.cmd                 ตัวเปิดสำหรับโฟลเดอร์ portable
+run.ps1                         รันโดยไม่ติดตั้ง (ดาวน์โหลดไป %TEMP%)
+install.ps1                     ติดตั้ง / portable launcher พร้อม shortcut
+Run without install.cmd         ตัวเปิดแบบไม่ติดตั้งสำหรับ ZIP
+Run DEFAUIT.cmd                 ตัวเปิดแบบติดตั้งสำหรับ ZIP
 uninstall.ps1                   ถอนการติดตั้ง + ลบ shortcut/task
 checksums.txt                   SHA256
 README.md
