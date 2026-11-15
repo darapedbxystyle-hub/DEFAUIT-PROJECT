@@ -154,20 +154,30 @@ catch {
     }
 }
 
-if (Show-DEFAUITWindow $Process 30) {
+if (-not $Process) {
+    $Deadline = (Get-Date).AddSeconds(20)
+    while ((Get-Date) -lt $Deadline -and -not $Process) {
+        Start-Sleep -Milliseconds 400
+        $Process = Get-RunningDEFAUIT
+    }
+}
+
+if ($Process -and (Show-DEFAUITWindow $Process 30)) {
     Info 'DEFAUIT is open.'
     Start-RefocusHelper -ProcessId $Process.Id
     return
 }
 
-$Process.Refresh()
-if ($Process.HasExited) {
-    $Existing = Get-RunningDEFAUIT
-    if ($Existing -and (Show-DEFAUITWindow $Existing 5)) {
-        Info 'DEFAUIT was already running. Brought the existing window to the front.'
-        return
+if ($Process) {
+    $Process.Refresh()
+    if ($Process.HasExited) {
+        $Existing = Get-RunningDEFAUIT
+        if ($Existing -and (Show-DEFAUITWindow $Existing 5)) {
+            Info 'DEFAUIT was already running. Brought the existing window to the front.'
+            return
+        }
+        Fail "DEFAUIT exited immediately (exit code $($Process.ExitCode)). Try again, or check antivirus / Windows version."
     }
-    Fail "DEFAUIT exited immediately (exit code $($Process.ExitCode)). Try again, or check antivirus / Windows version."
 }
 
 Info 'DEFAUIT is running. If the window is not visible, check the taskbar.'
