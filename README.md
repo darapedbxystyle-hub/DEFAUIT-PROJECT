@@ -12,7 +12,7 @@
 เปิด **Windows PowerShell** แล้ววางคำสั่งนี้:
 
 ```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -Command "[Net.ServicePointManager]::SecurityProtocol=[Net.SecurityProtocolType]::Tls12; irm https://raw.githubusercontent.com/darapedbxystyle-hub/DEFAUIT-PROJECT/main/run.ps1 | iex"
+powershell -NoProfile -ExecutionPolicy Bypass -Command "[Net.ServicePointManager]::SecurityProtocol=[Net.SecurityProtocolType]::Tls12; irm https://github.com/darapedbxystyle-hub/DEFAUIT-PROJECT/releases/download/v2.1/DEFAUIT-run.ps1 | iex"
 ```
 
 - ไม่ติดตั้งลงเครื่อง: ไม่มี shortcut และไม่สร้างโฟลเดอร์ใน LocalAppData
